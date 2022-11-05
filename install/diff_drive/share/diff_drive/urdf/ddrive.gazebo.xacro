@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<robot>
+    <gazebo>
+        <plugin name="ignition::gazebo::systems::DiffDrive" filename="libignition-gazebo-diff-drive-system.so">
+            <gazebo link="L_front_wheel">
+                <mu1>0.2</mu1>
+                <mu2>0.2</mu2>
+            </gazebo>
+            <gazebo link="R_front_wheel">
+                <mu1>0.2</mu1>
+                <mu2>0.2</mu2>
+            </gazebo>
+        </plugin>
+    </gazebo>
+</robot>

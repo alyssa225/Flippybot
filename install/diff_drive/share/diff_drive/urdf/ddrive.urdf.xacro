@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot">
+    <xacro:include filename="$(find diff_drive)/urdf/ddrive.gazebo.xacro" />
+    <xacro:property name="yaml_file" value="$(find diff_drive)/config/robot.yaml" />
+    <xacro:property name="robot" value="${load_yaml(yaml_file)}" />
+    <xacro:property name="wbody"  value="${robot['/**']['ros__parameters']['body_width']}" /> 
+    <xacro:property name="length"  value="${robot['/**']['ros__parameters']['body_length']}" /> 
+    <xacro:property name="hbody"  value="${robot['/**']['ros__parameters']['body_height']}" /> 
+    <xacro:property name="htotal"  value="${robot['/**']['ros__parameters']['total_height']}" /> 
+    <xacro:property name="wtotal"  value="${robot['/**']['ros__parameters']['total_width']}" /> 
+    <xacro:property name="rwheel"  value="${(htotal/2)}" /> 
+    <xacro:property name="wwheel"  value="${(wtotal-wbody)/2}" /> 
+    <xacro:property name="rcaster"  value="${robot['/**']['ros__parameters']['caster_radius']}" /> 
+    <xacro:property name="caster_attachment"  value="${((htotal-hbody)/2)-rcaster+0.05}" />
+    
+    <material name="blue">
+        <color rgba="0 0 1.0 1.0"/>
+    </material>
+    <material name="red">
+        <color rgba="1.0 0 0 1.0"/>
+    </material>
+    <material name="green">
+        <color rgba="0 1.0 0 1.0"/>
+    </material>
+    <material name="black">
+        <color rgba="0.2 0.2 0.2 1.0"/>
+    </material>
+
+    <xacro:macro name="box_inertial" params="mass length height width">
+        <inertial>
+                <mass value="${mass}" />
+                <inertia ixx="${1.0/12.0*mass*(height**2+width**2)}" ixy="0.0" ixz="0.0"
+                    iyy="${1.0/12.0*mass*(length**2+width**2)}" iyz="0.0"
+                    izz="${1.0/12.0*mass*(height**2+length**2)}" />
+        </inertial>
+    </xacro:macro>
+    <xacro:macro name="cyl_inertial" params="mass height radius">
+        <inertial>
+                <mass value="${mass}" />
+                <inertia ixx="${1.0/12.0*mass*(3.0*radius**2+height**2)}" ixy="0.0" ixz="0.0"
+                    iyy="${1.0/2.0*mass*radius**2}" iyz="0.0"
+                    izz="${1.0/12.0*mass*(3.0*radius**2+height**2)}" />
+        </inertial>
+    </xacro:macro>
+
+    <link name="base_link">
+        <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+            <box size="${wbody} ${length} ${hbody}" />
+        </geometry>
+        <material name="blue"/>
+        </visual>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/> 
+            <geometry>
+                <box size="${wbody} ${length} ${hbody}"/>
+            </geometry>
+        </collision>
+        <xacro:box_inertial mass='10' length='${length}' width='${wbody}' height='${hbody}'/>
+    </link>
+
+    <xacro:macro name="front_wheels" params="prefix reflect">
+        <link name="${prefix}_front_wheel">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 ${pi/2} 0" />
+                <geometry>
+                    <cylinder radius="${rwheel}" length="${wwheel}" />
+                </geometry>
+                <material name="green"/>
+                </visual>
+
+                <collision>
+                <origin xyz="0 0 0" rpy="0 ${pi/2} 0"/>
+                <geometry>
+                    <cylinder radius="${rwheel}" length="${wwheel}"/>
+                </geometry>
+                </collision>
+                <xacro:cyl_inertial mass='5' height='${wwheel}' radius='${rwheel}'/>
+        </link>
+
+        <joint name="base_to_${prefix}_front_wheel" type="continuous">
+            <parent link="base_link"/>
+            <child link="${prefix}_front_wheel"/>
+            <origin xyz="${reflect*(wbody/2+wwheel/2)} ${length/2-(rwheel*1.0/3.0)} 0" />
+            <axis xyz="1 0 0"/>
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro name="casterattach" params="prefix reflect top">
+        <link name="casterattach_${prefix}">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="${0.05} ${0.15} ${caster_attachment}" />
+                </geometry>
+                <material name="red"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/> 
+                <geometry>
+                    <box size="${0.05} ${0.15} ${caster_attachment}"/>
+                </geometry>
+            </collision>
+            <xacro:box_inertial mass='1' length='${0.15}' width='${0.05}' height='${caster_attachment}'/>
+        </link>
+
+        <joint name="base_to_${prefix}_caster_attachment" type="fixed">
+            <parent link="base_link"/>
+            <child link="casterattach_${prefix}"/>
+            <origin xyz="${reflect*(0.05/2.0+0.1/2.0)} ${-length/2+0.1} ${top*(caster_attachment/2+hbody/2)}" />
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro name="caster" params="prefix reflect">
+        <xacro:casterattach prefix="${prefix}_L" reflect="-1" top="${reflect}"/>
+        <xacro:casterattach prefix="${prefix}_R" reflect="1" top="${reflect}"/>
+        <link name="${prefix}_caster_wheel">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 ${pi/2}  0" />
+                <geometry>
+                    <cylinder radius="${rcaster}" length="0.1" />
+                </geometry>
+                <material name="black"/>
+                </visual>
+
+                <collision>
+                <origin xyz="0 0 0" rpy="0 ${pi/2}  0"/>
+                <geometry>
+                    <cylinder radius="${rcaster}" length="0.1"/>
+                </geometry>
+                </collision>
+                <xacro:cyl_inertial mass='1' height='${rcaster}' radius='0.1'/>
+        </link>
+
+        <joint name="base_to_${prefix}_caster_wheel" type="continuous">
+            <parent link="base_link"/>
+            <child link="${prefix}_caster_wheel"/>
+            <origin xyz="0 ${-length/2+0.1} ${reflect*(htotal/2-rcaster)}" />
+            <axis xyz="1 0 0"/>
+        </joint>
+    </xacro:macro>
+
+    <xacro:front_wheels prefix="L" reflect="-1"/>
+    <xacro:front_wheels prefix="R" reflect="1"/>
+    <xacro:caster prefix="top" reflect="1"/>
+    <xacro:caster prefix="bottom" reflect="-1"/>
+        
+</robot>    

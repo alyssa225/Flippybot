@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="ddrive_world">
+    <include>
+      <uri>
+      https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Asphalt Plane
+      </uri>
+    </include>
+    <include>
+      <name>barrier1</name>
+      <uri>
+      https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Jersey Barrier
+      </uri>
+    </include>
+    <include>
+      <name>barrier2</name>
+      <pose>2 2 0 0 0 0</pose>
+      <uri>
+      https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Jersey Barrier
+      </uri>
+    </include>
+    <include>
+      <name>box1</name>
+      <pose> -5 1 0.2 0 0 0</pose>
+      <uri>
+       https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Cardboard box
+      </uri>
+    </include>
+    <include>
+      <name>box2</name>
+      <pose>5 -5 0.2 0 0 0</pose>
+      <uri>
+      https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Cardboard box
+      </uri>
+    </include>
+    <include>
+      <uri>
+      https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/tent
+      </uri>
+      <pose>2 -6 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>
+      https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/aws_robomaker_warehouse_TrashCanC_01
+      </uri>
+      <pose>2 6 0 0 0 0</pose>
+    </include>
+  </world>
+</sdf>
+

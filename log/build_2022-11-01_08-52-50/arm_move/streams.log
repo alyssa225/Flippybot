@@ -1,0 +1,35 @@
+[0.844s] Invoking command in '/home/alyssa/homework3-alyssa225/arm_move': PYTHONPATH=/home/alyssa/homework3-alyssa225/install/arm_move/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/arm_move build --build-base /home/alyssa/homework3-alyssa225/build/arm_move/build install --prefix /home/alyssa/homework3-alyssa225/install/arm_move --record /home/alyssa/homework3-alyssa225/build/arm_move/install.log --single-version-externally-managed
+[1.258s] running egg_info
+[1.259s] creating ../build/arm_move/arm_move.egg-info
+[1.259s] writing ../build/arm_move/arm_move.egg-info/PKG-INFO
+[1.260s] writing dependency_links to ../build/arm_move/arm_move.egg-info/dependency_links.txt
+[1.260s] writing entry points to ../build/arm_move/arm_move.egg-info/entry_points.txt
+[1.260s] writing requirements to ../build/arm_move/arm_move.egg-info/requires.txt
+[1.261s] writing top-level names to ../build/arm_move/arm_move.egg-info/top_level.txt
+[1.261s] writing manifest file '../build/arm_move/arm_move.egg-info/SOURCES.txt'
+[1.264s] reading manifest file '../build/arm_move/arm_move.egg-info/SOURCES.txt'
+[1.266s] writing manifest file '../build/arm_move/arm_move.egg-info/SOURCES.txt'
+[1.266s] running build
+[1.266s] running build_py
+[1.266s] creating /home/alyssa/homework3-alyssa225/build/arm_move/build
+[1.267s] creating /home/alyssa/homework3-alyssa225/build/arm_move/build/lib
+[1.267s] creating /home/alyssa/homework3-alyssa225/build/arm_move/build/lib/arm_move
+[1.267s] copying arm_move/__init__.py -> /home/alyssa/homework3-alyssa225/build/arm_move/build/lib/arm_move
+[1.267s] running install
+[1.267s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[1.268s]   warnings.warn(
+[1.268s] running install_lib
+[1.270s] creating /home/alyssa/homework3-alyssa225/install/arm_move/lib/python3.10/site-packages/arm_move
+[1.270s] copying /home/alyssa/homework3-alyssa225/build/arm_move/build/lib/arm_move/__init__.py -> /home/alyssa/homework3-alyssa225/install/arm_move/lib/python3.10/site-packages/arm_move
+[1.271s] byte-compiling /home/alyssa/homework3-alyssa225/install/arm_move/lib/python3.10/site-packages/arm_move/__init__.py to __init__.cpython-310.pyc
+[1.271s] running install_data
+[1.272s] creating /home/alyssa/homework3-alyssa225/install/arm_move/share/ament_index
+[1.273s] creating /home/alyssa/homework3-alyssa225/install/arm_move/share/ament_index/resource_index
+[1.273s] creating /home/alyssa/homework3-alyssa225/install/arm_move/share/ament_index/resource_index/packages
+[1.273s] copying resource/arm_move -> /home/alyssa/homework3-alyssa225/install/arm_move/share/ament_index/resource_index/packages
+[1.273s] copying package.xml -> /home/alyssa/homework3-alyssa225/install/arm_move/share/arm_move
+[1.273s] running install_egg_info
+[1.276s] Copying ../build/arm_move/arm_move.egg-info to /home/alyssa/homework3-alyssa225/install/arm_move/lib/python3.10/site-packages/arm_move-0.0.0-py3.10.egg-info
+[1.278s] running install_scripts
+[1.314s] writing list of installed files to '/home/alyssa/homework3-alyssa225/build/arm_move/install.log'
+[1.335s] Invoked command in '/home/alyssa/homework3-alyssa225/arm_move' returned '0': PYTHONPATH=/home/alyssa/homework3-alyssa225/install/arm_move/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/arm_move build --build-base /home/alyssa/homework3-alyssa225/build/arm_move/build install --prefix /home/alyssa/homework3-alyssa225/install/arm_move --record /home/alyssa/homework3-alyssa225/build/arm_move/install.log --single-version-externally-managed
