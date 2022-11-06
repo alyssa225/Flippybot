@@ -5,16 +5,18 @@
       <uri>
       https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Asphalt Plane
       </uri>
+      <pose>0 0 -0.05 0 0 0</pose>
     </include>
     <include>
       <name>barrier1</name>
+      <pose>-8 2 0 0 0 0</pose>
       <uri>
       https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Jersey Barrier
       </uri>
     </include>
     <include>
       <name>barrier2</name>
-      <pose>2 2 0 0 0 0</pose>
+      <pose>8 2 0 0 0 0</pose>
       <uri>
       https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Jersey Barrier
       </uri>

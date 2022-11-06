@@ -10,6 +10,7 @@ setup.py
 ../build/diff_drive/diff_drive.egg-info/zip-safe
 config/robot.yaml
 diff_drive/__init__.py
+diff_drive/flip.py
 launch/ddrive.launch.py
 launch/ddrive_rviz.launch.py
 resource/diff_drive

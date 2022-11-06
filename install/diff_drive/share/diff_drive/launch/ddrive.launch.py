@@ -7,6 +7,8 @@ from launch.substitutions import Command, LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.parameter_descriptions import ParameterValue
+from ament_index_python.packages import get_package_share_directory
+
 
 def generate_launch_description():
 
@@ -19,6 +21,11 @@ def generate_launch_description():
     os.environ["GAZEBO_MODEL_PATH"] = gz_model_path
     world_file_name = 'ddrive.world'
     world_path = os.path.join('diff_drive', 'worlds', world_file_name)
+    config = os.path.join(
+      get_package_share_directory('turtle_brick'),
+      'config',
+      'turtle.yaml'
+      )
     robot_description = ParameterValue(Command(['xacro ', LaunchConfiguration('model')]),
                                        value_type=str)
     robot_state_publisher_node = Node(
@@ -42,10 +49,27 @@ def generate_launch_description():
                     '-z', '0.6',
                     '-topic', '/robot_description'],
                     output='screen')
+
+    bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=[
+          '/gz_ros/test/serviceclient/world_control@ros_gz_interfaces/srv/ControlWorld',
+        ],
+        output='screen'
+    )
+
+    flip = Node(
+            package='diff_drive',
+            namespace='flip',
+            executable='flip',
+            parameters=[config]
+        ),
     
     return LaunchDescription([
         launch_gz,
         model_arg,
+        bridge,
         robot_state_publisher_node,
         spawn_robot_cmd
     ])
