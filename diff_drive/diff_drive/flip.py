@@ -71,19 +71,19 @@ class Flip(Node):
         # create pose object
         # Create a timer to do movements
         self.i = 0
-        self.freq = 100.0
+        self.freq = 50.0
         self.period = 1 / self.freq
         self.tmr = self.create_timer(self.period, self.timer_callback)
 
     def timer_callback(self):
         # update odom
         self.odom.header.stamp = self.get_clock().now().to_msg()
-        if self.i==100:
+        if self.i==50:
             self.direction=self.direction*-1
             self.lastdir = self.direction
-        elif self.i==250:
+        elif self.i==125:
             self.direction=0
-        elif self.i==450:
+        elif self.i==225:
             self.direction = self.lastdir
             self.i = 0
         self.odom.twist.twist.linear.x = self.direction*self.vx

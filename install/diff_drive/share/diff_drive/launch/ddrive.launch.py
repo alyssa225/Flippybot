@@ -34,7 +34,7 @@ def generate_launch_description():
                                         [FindPackageShare('ros_ign_gazebo'),
                                         '/launch/ign_gazebo.launch.py']),
                                         launch_arguments={'gz_args':[
-                                            FindPackageShare('diff_drive'),'/worlds/ddrive.world']}.items())
+                                            FindPackageShare('diff_drive'),'/worlds/ddrive.world'],'debugger':'true'}.items())
     
     spawn_robot_cmd=Node(
         package='ros_gz_sim',
@@ -51,8 +51,9 @@ def generate_launch_description():
         executable='parameter_bridge',
         arguments=[
           '/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist',
-          '/odometry@nav_msgs/msg/Odometry@ignition.msgs.Odometry',
-          
+          '/odom@nav_msgs/msg/Odometry@ignition.msgs.Odometry',
+          '/Time@builtin_interfaces/Time@ignition.msgs.Time'
+
         ],
         output='screen'
     )
