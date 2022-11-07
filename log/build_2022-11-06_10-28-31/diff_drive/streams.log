@@ -1,0 +1,23 @@
+[1.629s] Invoking command in '/home/alyssa/homework3-alyssa225/diff_drive': PYTHONPATH=/home/alyssa/homework3-alyssa225/install/diff_drive/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/diff_drive build --build-base /home/alyssa/homework3-alyssa225/build/diff_drive/build install --prefix /home/alyssa/homework3-alyssa225/install/diff_drive --record /home/alyssa/homework3-alyssa225/build/diff_drive/install.log --single-version-externally-managed
+[2.017s] running egg_info
+[2.019s] writing ../build/diff_drive/diff_drive.egg-info/PKG-INFO
+[2.019s] writing dependency_links to ../build/diff_drive/diff_drive.egg-info/dependency_links.txt
+[2.019s] writing entry points to ../build/diff_drive/diff_drive.egg-info/entry_points.txt
+[2.019s] writing requirements to ../build/diff_drive/diff_drive.egg-info/requires.txt
+[2.019s] writing top-level names to ../build/diff_drive/diff_drive.egg-info/top_level.txt
+[2.022s] reading manifest file '../build/diff_drive/diff_drive.egg-info/SOURCES.txt'
+[2.024s] writing manifest file '../build/diff_drive/diff_drive.egg-info/SOURCES.txt'
+[2.024s] running build
+[2.024s] running build_py
+[2.026s] running install
+[2.026s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[2.026s]   warnings.warn(
+[2.026s] running install_lib
+[2.029s] running install_data
+[2.030s] running install_egg_info
+[2.033s] removing '/home/alyssa/homework3-alyssa225/install/diff_drive/lib/python3.10/site-packages/diff_drive-0.0.0-py3.10.egg-info' (and everything under it)
+[2.033s] Copying ../build/diff_drive/diff_drive.egg-info to /home/alyssa/homework3-alyssa225/install/diff_drive/lib/python3.10/site-packages/diff_drive-0.0.0-py3.10.egg-info
+[2.034s] running install_scripts
+[2.069s] Installing turtle_robot script to /home/alyssa/homework3-alyssa225/install/diff_drive/lib/diff_drive
+[2.070s] writing list of installed files to '/home/alyssa/homework3-alyssa225/build/diff_drive/install.log'
+[2.108s] Invoked command in '/home/alyssa/homework3-alyssa225/diff_drive' returned '0': PYTHONPATH=/home/alyssa/homework3-alyssa225/install/diff_drive/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/diff_drive build --build-base /home/alyssa/homework3-alyssa225/build/diff_drive/build install --prefix /home/alyssa/homework3-alyssa225/install/diff_drive --record /home/alyssa/homework3-alyssa225/build/diff_drive/install.log --single-version-externally-managed

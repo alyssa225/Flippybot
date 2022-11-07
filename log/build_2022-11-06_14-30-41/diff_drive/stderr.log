@@ -1,0 +1,7 @@
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+  File "/home/alyssa/homework3-alyssa225/install/diff_drive/lib/python3.10/site-packages/diff_drive/flip.py", line 86
+    self.cmd_vel_pub .publish(self.odom.twist.twist)        self.i = self.i+1
+                                                            ^^^^
+SyntaxError: invalid syntax
+

@@ -38,6 +38,7 @@ class Flip(Node):
         qos_profile = QoSProfile(depth=10)
         self.joint_publisher_ = self.create_publisher(JointState, '/joint_states', qos_profile)
         self.odom_pub = self.create_publisher(Odometry, '/odom', 10)
+        self.cmd_vel_pub = self.create_publisher(Twist, '/cmd_vel', 10)
         # Static broadcasters publish on /tf_static.
         self.static_broadcaster = StaticTransformBroadcaster(self)
         self.broadcaster = TransformBroadcaster(self)
@@ -49,107 +50,48 @@ class Flip(Node):
         world_odom_tf.transform.translation.x = 0.0
         world_odom_tf.transform.translation.y = 0.0
         self.static_broadcaster.sendTransform(world_odom_tf)
-        # positions
-        self.currentx = 0.0
-        self.currenty = 0.0
-        self.currentomega = 0.0
-        self.goalx = 0.0
-        self.goaly = 0.0
-        self.distx = 0.0
-        self.disty = 0.0
         # velocity
-        self.vx = 0.0
-        self.vy = 0.0
-        self.dx = 0.0
-        self.dy = 0.0
-        self.dtheta = 0.0
-        self.stem_ang = 0.0
+        self.vx = 11.0
+        self.direction = 1
+        self.lastdir = self.direction
         # create the odom to baselink transform
         self.broadcaster = TransformBroadcaster(self, qos=qos_profile)
         self.odom_base_link = TransformStamped()
         self.odom_base_link.header.frame_id = "odom"
         self.odom_base_link.child_frame_id = "base_link"
-        self.odom_base_link.transform.translation.z = 2 * self.rwheel + 0.15 + 0.25
-        # joint state object
-        self.joint_state = JointState()
-        self.joint_state.header.frame_id = 'base_link'
-        self.wheel_ang = 0.0
-        self.direction_ang = 0.0
-        self.tilt_ang = 0.0
-        self.tilt_angf = 0.0
+        self.odom_base_link.transform.translation.z = self.th
         # odommetry object
         self.odom = Odometry()
         self.odom.header.frame_id = "odom"
         self.odom.child_frame_id = "base_link"
+
+        self.joint_state = JointState()
+        self.joint_state.header.frame_id = 'base_link'
         # cmd_vel object
-        self.twist = Twist()
         # create pose object
-        self.robo_pose = Pose()
         # Create a timer to do movements
+        self.i = 0
         self.freq = 100.0
         self.period = 1 / self.freq
         self.tmr = self.create_timer(self.period, self.timer_callback)
 
     def timer_callback(self):
-        time = self.get_clock().now().to_msg()
         # update odom
         self.odom.header.stamp = self.get_clock().now().to_msg()
-        self.odom.pose.pose.position.x = self.currentx
-        self.odom.pose.pose.position.y = self.currenty
-        self.odom.twist.twist.linear.x = self.vx
-        self.odom.twist.twist.linear.y = self.vy
-        # updating joint states
-        self.joint_state.header.stamp = self.get_clock().now().to_msg()
-        self.joint_state.name = ['base_to_L_front_wheel', 'base_to_R_front_wheel', 'base_to_top_caster_wheel','base_to_bottom_caster_wheel']
-        self.joint_state.position = [self.L_wheel_ang, self.R_wheel_ang, self.flip]
-        # update twist
-        self.twist.linear.x = self.vx
-        self.twist.linear.y = self.vy
-        # update robot pose
-        self.robo_pose.position.x = self.currentx
-        self.robo_pose.position.y = self.currenty
-        self.robo_pose.position.z = self.height
-        self.robo_pose.orientation.w = self.tilt_ang
-        # update transforms
-        self.odom_base_link.transform.translation.x = self.currentx
-        self.odom_base_link.transform.translation.y = self.currenty
-        self.odom_base_link.header.stamp = time
+        if self.i==100:
+            self.direction=self.direction*-1
+            self.lastdir = self.direction
+        elif self.i==250:
+            self.direction=0
+        elif self.i==450:
+            self.direction = self.lastdir
+            self.i = 0
+        self.odom.twist.twist.linear.x = self.direction*self.vx
         # broadcasting and publishing
-        self.joint_publisher_.publish(self.joint_state)
         self.odom_pub.publish(self.odom)
-        self.vel_pub.publish(self.twist)
-        self.robot_pub.publish(self.robo_pose)
-        self.broadcaster.sendTransform(self.odom_base_link)
-        # moving the robot to goal pose
-        self.currentx += self.dx
-        self.currenty += self.dy
-        if abs(self.currentx-self.goalx) <= 0.03:
-            self.vx = 0.0
-            self.dx = 0.0
-        if abs(self.currenty-self.goaly) <= 0.03:
-            self.vy = 0.0
-            self.dy = 0.0
-        # move the wheel and stem to face direction and roll
-        if self.vx != 0.0 and self.vy != 0.0:
-            self.wheel_ang += self.dtheta
-        if abs(self.stem_ang - self.direction_ang) >= 0.2:
-            if self.stem_ang - self.direction_ang >= 0:
-                self.direction_ang += 0.1
-                self.get_logger().info('stem angle: "%s"' % (self.direction_ang))
-            else:
-                self.direction_ang -= 0.1
-                self.get_logger().info('stem angle: "%s"' % (self.direction_ang))
-        # tilt if tilt is called
-        if self.tilt_ang != 0.0 or self.tilt_angf != 0.0:
-            if abs(self.tilt_ang - self.tilt_angf) >= 0.01:
-                if self.tilt_angf - self.tilt_ang < 0.0:
-                    self.tilt_ang -= 0.005
-                elif self.tilt_angf - self.tilt_ang >= 0.0:
-                    self.tilt_ang += 0.005
-            elif self.tilt_angf == 0.0:
-                self.tilt_ang = 0.0
-            else:
-                self.tilt_angf = 0.0
+        self.cmd_vel_pub .publish(self.odom.twist.twist)        
+        self.i = self.i+1
+        
 
 
 def main(args=None):

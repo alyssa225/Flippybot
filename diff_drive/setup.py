@@ -26,7 +26,7 @@ setup(
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
-        'console_scripts': ['turtle_robot = diff_drive.flip:main'
+        'console_scripts': ['flip = diff_drive.flip:main'
         ],
     },
 )

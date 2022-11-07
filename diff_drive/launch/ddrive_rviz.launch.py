@@ -6,6 +6,8 @@ from launch.conditions import IfCondition
 from launch.substitutions import Command, LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
+from launch_ros.substitutions import FindPackageShare
+from launch.substitutions import PathJoinSubstitution, TextSubstitution
 
 """
 took bases from https://github.com/ros/urdf_tutorial/blob/ros2/launch/display.launch.py
@@ -23,20 +25,15 @@ LAUNCH ARGUMENTS:
 
 def generate_launch_description():
     ddrive_path = 'diff_drive'
-    default_model_path = ddrive_path + '/urdf/ddrive.urdf.xacro'
     default_rviz_config_path = ddrive_path + '/config/ddrive_urdf.rviz'
     view_only = LaunchConfiguration('view_only')
     view_only_arg = DeclareLaunchArgument(name='view_only', default_value='False',
                                         choices=['False', 'True'],
                                         description='choose which jointstate publisher')
-    model_arg = DeclareLaunchArgument(name='model', default_value=str(default_model_path),
-                                      description='Absolute path to robot urdf file')
     rviz_arg = DeclareLaunchArgument(name='rvizconfig',
                                      default_value=str(default_rviz_config_path),
                                      description='Absolute path to rviz config file')
 
-    robot_description = ParameterValue(Command(['xacro ', LaunchConfiguration('model')]),
-                                       value_type=str)
     config = os.path.join(
       get_package_share_directory('diff_drive'),
       'config',
@@ -46,7 +43,9 @@ def generate_launch_description():
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        parameters=[{'robot_description': robot_description, 'publish_frequency': 100.0}, config, ]
+        parameters=[{'robot_description': Command([TextSubstitution(text="xacro "),
+                    PathJoinSubstitution(
+                    [FindPackageShare("diff_drive"), "urdf/ddrive.urdf.xacro"])])}, config, ]
     )
 
     # Depending on gui parameter, either launch joint_state_publisher or joint_state_publisher_gui
@@ -72,7 +71,6 @@ def generate_launch_description():
 
     return LaunchDescription([
         view_only_arg,
-        model_arg,
         rviz_arg,
         joint_state_publisher_node,
         joint_state_publisher_gui_node,

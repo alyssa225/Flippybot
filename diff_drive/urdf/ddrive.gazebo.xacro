@@ -3,20 +3,19 @@
 <robot>
     <gazebo>
         <plugin name="ignition::gazebo::systems::DiffDrive" filename="libignition-gazebo-diff-drive-system.so">
-            <odom_publish_frequency>100</odom_publish_frequency>
-            <left_joint>L_front_wheel</left_joint>
-            <right_joint>R_front_wheel</right_joint>
+            <left_joint>base_to_L_front_wheel</left_joint>
+            <right_joint>base_to_R_front_wheel</right_joint>
             <wheel_radius>0.6</wheel_radius>
-            <topic>cmd_vel</topic>
-            <odom_topic>odom</odom_topic>
-            <gazebo link="L_front_wheel">
-                <mu1>0.2</mu1>
-                <mu2>0.2</mu2>
-            </gazebo>
-            <gazebo link="R_front_wheel">
-                <mu1>0.2</mu1>
-                <mu2>0.2</mu2>
-            </gazebo>
-        </plugin>
+            <topic>/cmd_vel</topic>
+            <odom_topic>/odom</odom_topic>
+        </plugin>   
+    </gazebo>
+    <gazebo link="L_front_wheel">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+    </gazebo>
+    <gazebo link="R_front_wheel">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
     </gazebo>
 </robot>

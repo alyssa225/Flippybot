@@ -39,13 +39,13 @@
       <uri>
       https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/tent
       </uri>
-      <pose>2 -6 0 0 0 0</pose>
+      <pose>6 -6 0 0 0 0</pose>
     </include>
     <include>
       <uri>
       https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/aws_robomaker_warehouse_TrashCanC_01
       </uri>
-      <pose>2 6 0 0 0 0</pose>
+      <pose>6 6 0 0 0 0</pose>
     </include>
   </world>
 </sdf>
