@@ -58,7 +58,7 @@
                 <box size="${wbody} ${length} ${hbody}"/>
             </geometry>
         </collision>
-        <xacro:box_inertial mass='10' length='${length}' width='${wbody}' height='${hbody}'/>
+        <xacro:box_inertial mass='15' length='${length}' width='${wbody}' height='${hbody}'/>
     </link>
 
     <xacro:macro name="front_wheels" params="prefix reflect">
@@ -77,13 +77,13 @@
                     <cylinder radius="${rwheel}" length="${wwheel}"/>
                 </geometry>
                 </collision>
-                <xacro:cyl_inertial mass='5' height='${wwheel}' radius='${rwheel}'/>
+                <xacro:cyl_inertial mass='10' height='${wwheel}' radius='${rwheel}'/>
         </link>
 
         <joint name="base_to_${prefix}_front_wheel" type="continuous">
             <parent link="base_link"/>
             <child link="${prefix}_front_wheel"/>
-            <origin xyz="${reflect*(wbody/2+wwheel/2)} ${length/2-(rwheel*1.0/3.0)} 0" />
+            <origin xyz="${reflect*(wbody/2+wwheel/2)} ${length/2-(rwheel*1.0/3.0)}  0" />
             <axis xyz="1 0 0"/>
         </joint>
     </xacro:macro>
@@ -119,7 +119,7 @@
         <xacro:casterattach prefix="${prefix}_R" reflect="1" top="${reflect}"/>
         <link name="${prefix}_caster_wheel">
             <visual>
-                <origin xyz="0 0 0" rpy="0 ${pi/2}  0" />
+                <origin xyz="0 0 0" rpy="0 ${pi/2} 0" />
                 <geometry>
                     <cylinder radius="${rcaster}" length="0.1" />
                 </geometry>
@@ -127,12 +127,12 @@
                 </visual>
 
                 <collision>
-                <origin xyz="0 0 0" rpy="0 ${pi/2}  0"/>
+                <origin xyz="0 0 0" rpy="0 ${pi/2} 0"/>
                 <geometry>
                     <cylinder radius="${rcaster}" length="0.1"/>
                 </geometry>
                 </collision>
-                <xacro:cyl_inertial mass='1' height='${rcaster}' radius='0.1'/>
+                <xacro:cyl_inertial mass='5' height='${rcaster}' radius='0.1'/>
         </link>
 
         <joint name="base_to_${prefix}_caster_wheel" type="continuous">

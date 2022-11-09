@@ -7,6 +7,9 @@ Panels:
         - /Global Options1
         - /Status1
         - /RobotModel1
+        - /RobotModel1/Mass Properties1
+        - /RobotModel1/Description Topic1
+        - /TF1
         - /Odometry1
         - /Odometry1/Status1
       Splitter Ratio: 0.5
@@ -121,6 +124,54 @@ Visualization Manager:
       Update Interval: 0
       Value: true
       Visual Enabled: true
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+        L_front_wheel:
+          Value: true
+        R_front_wheel:
+          Value: true
+        base_link:
+          Value: true
+        bottom_caster_wheel:
+          Value: true
+        casterattach_bottom_L:
+          Value: true
+        casterattach_bottom_R:
+          Value: true
+        casterattach_top_L:
+          Value: true
+        casterattach_top_R:
+          Value: true
+        top_caster_wheel:
+          Value: true
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: false
+      Tree:
+        base_link:
+          L_front_wheel:
+            {}
+          R_front_wheel:
+            {}
+          bottom_caster_wheel:
+            {}
+          casterattach_bottom_L:
+            {}
+          casterattach_bottom_R:
+            {}
+          casterattach_top_L:
+            {}
+          casterattach_top_R:
+            {}
+          top_caster_wheel:
+            {}
+      Update Interval: 0
+      Value: true
     - Angle Tolerance: 0.10000000149011612
       Class: rviz_default_plugins/Odometry
       Covariance:
