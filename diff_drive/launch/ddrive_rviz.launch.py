@@ -9,20 +9,6 @@ from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 from launch.substitutions import PathJoinSubstitution, TextSubstitution
 
-"""
-took bases from https://github.com/ros/urdf_tutorial/blob/ros2/launch/display.launch.py
-launches the rviz, robot publisher, and choosen joint state publisher nodes and takes the
-turtle_robot.urdf.xacro file from the urdf folder
-LAUNCH ARGUMENTS:
-    -use_jsp:
-        default: '"gui"'
-        arguments: ['"gui"', '"jsp"', '"none"']
-            '"gui"': launches with joint_state_publisher_gui_node
-            '"jsp"': launches with joint_state_publisher_node
-            '"none"': does not use either joint state publisher
-"""
-
-
 def generate_launch_description():
     ddrive_path = FindPackageShare(package='diff_drive').find('diff_drive')
     default_rviz_config_path = os.path.join(ddrive_path, 'config/ddrive_urdf.rviz')
@@ -71,8 +57,7 @@ def generate_launch_description():
         name='rviz2',
         output='screen',
         arguments=['-d', LaunchConfiguration('rvizconfig')],
-        condition=IfCondition(PythonExpression([view_only, "==True"])),
-        remappings=[('/joint_states', '/world/ddrive_world/model/robot/joint_state'),]
+        condition=IfCondition(PythonExpression([view_only, "==True"]))
     )
 
     rviz_node2 = Node(
@@ -81,8 +66,7 @@ def generate_launch_description():
         name='rviz2',
         output='screen',
         arguments=['-d', LaunchConfiguration('odomconfig')],
-        condition=IfCondition(PythonExpression([view_only, "==False"])),
-        remappings=[('/joint_states', '/world/ddrive_world/model/robot/joint_state'),]
+        condition=IfCondition(PythonExpression([view_only, "==False"]))
     )
 
     return LaunchDescription([

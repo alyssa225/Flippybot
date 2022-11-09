@@ -58,7 +58,7 @@
                 <box size="${length} ${wbody} ${hbody}"/>
             </geometry>
         </collision>
-        <xacro:box_inertial mass='15' length='${wbody}' width='${length}' height='${hbody}'/>
+        <xacro:box_inertial mass='25' length='${wbody}' width='${length}' height='${hbody}'/>
     </link>
 
     <xacro:macro name="front_wheels" params="prefix reflect">
@@ -104,7 +104,7 @@
                     <box size="${0.15} ${0.05} ${caster_attachment}"/>
                 </geometry>
             </collision>
-            <xacro:box_inertial mass='1' length='${0.05}' width='${0.15}' height='${caster_attachment}'/>
+            <xacro:box_inertial mass='3' length='${0.05}' width='${0.15}' height='${caster_attachment}'/>
         </link>
 
         <joint name="base_to_${prefix}_caster_attachment" type="fixed">

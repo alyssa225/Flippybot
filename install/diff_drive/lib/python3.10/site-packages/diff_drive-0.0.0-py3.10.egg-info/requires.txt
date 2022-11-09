@@ -1,4 +1,0 @@
-gazebo
-rviz
-setuptools
-urdf

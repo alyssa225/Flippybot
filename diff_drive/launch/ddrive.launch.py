@@ -50,7 +50,7 @@ def generate_launch_description():
         package='ros_gz_sim',
         executable='create',
         arguments=['-name','robot',
-                    '-x', '1.0',
+                    '-x', '-1.0',
                     '-y', '4.0',
                     '-z', '0.6',
                     '-topic', '/robot_description'],
@@ -66,7 +66,7 @@ def generate_launch_description():
           '/world/ddrive_world/model/robot/joint_state@sensor_msgs/msg/JointState@gz.msgs.Model'
 
         ],
-        # remappings=[('/joint_states', '/world/ddrive_world/model/robot/joint_state'),],
+        remappings=[('/joint_states', '/world/ddrive_world/model/robot/joint_state')],
         output='screen'
     )
 
