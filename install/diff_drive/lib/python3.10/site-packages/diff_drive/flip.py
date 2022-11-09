@@ -17,7 +17,7 @@ class Flip(Node):
         super().__init__('flip')
         self.cmd_vel_pub = self.create_publisher(Twist, '/cmd_vel', 10)
         self.vx = 11.0
-        self.direction = -1
+        self.direction = 1
         self.lastdir = self.direction
         self.odom = Odometry()
         self.odom.header.frame_id = "/odom"

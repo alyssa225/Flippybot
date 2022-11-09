@@ -1,0 +1,3 @@
+[console_scripts]
+flip = diff_drive.flip:main
+

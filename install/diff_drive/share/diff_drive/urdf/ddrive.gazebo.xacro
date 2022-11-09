@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<robot>
+    <gazebo>
+        <plugin name="ignition::gazebo::systems::DiffDrive" filename="libignition-gazebo-diff-drive-system.so">
+            <left_joint>base_to_L_front_wheel</left_joint>
+            <right_joint>base_to_R_front_wheel</right_joint>
+            <wheel_radius>0.6</wheel_radius>
+            <topic>/cmd_vel</topic>
+            <odom_topic>/odom</odom_topic>
+            <tf_topic>/tf</tf_topic>
+            <frame_id>/odom</frame_id>
+            <child_frame_id>/base_link</child_frame_id>
+        </plugin>   
+    </gazebo>
+    <gazebo>
+        <plugin filename="ignition-gazebo-joint-state-publisher-system" name="ignition::gazebo::systems::JointStatePublisher"/> 
+    </gazebo>
+    <gazebo Reference="L_front_wheel">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+    </gazebo>
+    <gazebo Reference="R_front_wheel">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+    </gazebo>
+</robot>

@@ -1,0 +1,31 @@
+running egg_info
+creating ../build/arm_move/arm_move.egg-info
+writing ../build/arm_move/arm_move.egg-info/PKG-INFO
+writing dependency_links to ../build/arm_move/arm_move.egg-info/dependency_links.txt
+writing entry points to ../build/arm_move/arm_move.egg-info/entry_points.txt
+writing requirements to ../build/arm_move/arm_move.egg-info/requires.txt
+writing top-level names to ../build/arm_move/arm_move.egg-info/top_level.txt
+writing manifest file '../build/arm_move/arm_move.egg-info/SOURCES.txt'
+reading manifest file '../build/arm_move/arm_move.egg-info/SOURCES.txt'
+writing manifest file '../build/arm_move/arm_move.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/alyssa/hw3_ws/src/homework3-alyssa225/build/arm_move/build
+creating /home/alyssa/hw3_ws/src/homework3-alyssa225/build/arm_move/build/lib
+creating /home/alyssa/hw3_ws/src/homework3-alyssa225/build/arm_move/build/lib/arm_move
+copying arm_move/__init__.py -> /home/alyssa/hw3_ws/src/homework3-alyssa225/build/arm_move/build/lib/arm_move
+running install
+running install_lib
+creating /home/alyssa/hw3_ws/src/homework3-alyssa225/install/arm_move/lib/python3.10/site-packages/arm_move
+copying /home/alyssa/hw3_ws/src/homework3-alyssa225/build/arm_move/build/lib/arm_move/__init__.py -> /home/alyssa/hw3_ws/src/homework3-alyssa225/install/arm_move/lib/python3.10/site-packages/arm_move
+byte-compiling /home/alyssa/hw3_ws/src/homework3-alyssa225/install/arm_move/lib/python3.10/site-packages/arm_move/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/alyssa/hw3_ws/src/homework3-alyssa225/install/arm_move/share/ament_index
+creating /home/alyssa/hw3_ws/src/homework3-alyssa225/install/arm_move/share/ament_index/resource_index
+creating /home/alyssa/hw3_ws/src/homework3-alyssa225/install/arm_move/share/ament_index/resource_index/packages
+copying resource/arm_move -> /home/alyssa/hw3_ws/src/homework3-alyssa225/install/arm_move/share/ament_index/resource_index/packages
+copying package.xml -> /home/alyssa/hw3_ws/src/homework3-alyssa225/install/arm_move/share/arm_move
+running install_egg_info
+Copying ../build/arm_move/arm_move.egg-info to /home/alyssa/hw3_ws/src/homework3-alyssa225/install/arm_move/lib/python3.10/site-packages/arm_move-0.0.0-py3.10.egg-info
+running install_scripts
+writing list of installed files to '/home/alyssa/hw3_ws/src/homework3-alyssa225/build/arm_move/install.log'
