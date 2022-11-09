@@ -38,12 +38,12 @@ def generate_launch_description():
                     [FindPackageShare("diff_drive"), "urdf/ddrive.urdf.xacro"])])}, config, ]
     )
 
-    joint_state_publisher_node = Node(
-        package='joint_state_publisher',
-        executable='joint_state_publisher',
-        condition=IfCondition(PythonExpression([view_only, "==False"]))
+    # joint_state_publisher_node = Node(
+    #     package='joint_state_publisher',
+    #     executable='joint_state_publisher',
+    #     condition=IfCondition(PythonExpression([view_only, "==False"]))
         
-    )
+    # )
 
     joint_state_publisher_gui_node = Node(
         package='joint_state_publisher_gui',
@@ -73,7 +73,7 @@ def generate_launch_description():
         view_only_arg,
         rviz_odom_arg,
         rviz_arg,
-        joint_state_publisher_node,
+        # joint_state_publisher_node,
         joint_state_publisher_gui_node,
         robot_state_publisher_node,
         rviz_node1,

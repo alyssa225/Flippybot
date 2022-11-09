@@ -2,7 +2,6 @@ import rclpy
 from rclpy.node import Node
 from tf2_ros.static_transform_broadcaster import StaticTransformBroadcaster
 from tf2_ros import TransformBroadcaster
-from sensor_msgs.msg import JointState
 from rclpy.qos import QoSProfile
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist,  TransformStamped, PoseStamped, Pose

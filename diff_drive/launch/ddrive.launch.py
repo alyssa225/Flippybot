@@ -32,13 +32,13 @@ def generate_launch_description():
         ])
     )
 
-    robot_state_publisher_node = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        parameters=[{'robot_description': Command([TextSubstitution(text="xacro "),
-                    PathJoinSubstitution(
-                    [FindPackageShare("diff_drive"), "urdf/ddrive.urdf.xacro"])])}, config, ]
-    )
+    # robot_state_publisher_node = Node(
+    #     package='robot_state_publisher',
+    #     executable='robot_state_publisher',
+    #     parameters=[{'robot_description': Command([TextSubstitution(text="xacro "),
+    #                 PathJoinSubstitution(
+    #                 [FindPackageShare("diff_drive"), "urdf/ddrive.urdf.xacro"])])}, config, ]
+    # )
 
     launch_gz = IncludeLaunchDescription(PythonLaunchDescriptionSource(
                                         [FindPackageShare('ros_ign_gazebo'),
@@ -66,7 +66,7 @@ def generate_launch_description():
           '/world/ddrive_world/model/robot/joint_state@sensor_msgs/msg/JointState@gz.msgs.Model'
 
         ],
-        remappings=[('/joint_states', '/world/ddrive_world/model/robot/joint_state')],
+        # remappings=[('/joint_states', '/world/ddrive_world/model/robot/joint_state')],
         output='screen'
     )
 
@@ -80,7 +80,7 @@ def generate_launch_description():
     return LaunchDescription([
         launch_gz,
         runlaunch,
-        robot_state_publisher_node,
+        # robot_state_publisher_node,
         bridge,
         spawn_robot_cmd,
         flip
