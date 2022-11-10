@@ -15,7 +15,7 @@ def generate_launch_description():
     default_rviz_odom_config_path = os.path.join(ddrive_path, 'config/ddrive_odom_urdf.rviz')
     view_only = LaunchConfiguration('view_only')
     view_only_arg = DeclareLaunchArgument(name='view_only', default_value='False',
-                                        choices=['False', 'True'],
+                                        choices=['False', 'True', 'None'],
                                         description='choose which jointstate publisher')
     rviz_arg = DeclareLaunchArgument(name='rvizconfig',
                                      default_value=str(default_rviz_config_path),
@@ -38,12 +38,12 @@ def generate_launch_description():
                     [FindPackageShare("diff_drive"), "urdf/ddrive.urdf.xacro"])])}, config, ]
     )
 
-    # joint_state_publisher_node = Node(
-    #     package='joint_state_publisher',
-    #     executable='joint_state_publisher',
-    #     condition=IfCondition(PythonExpression([view_only, "==False"]))
+    joint_state_publisher_node = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        condition=IfCondition(PythonExpression([view_only, "==False"]))
         
-    # )
+    )
 
     joint_state_publisher_gui_node = Node(
         package='joint_state_publisher_gui',
@@ -57,7 +57,7 @@ def generate_launch_description():
         name='rviz2',
         output='screen',
         arguments=['-d', LaunchConfiguration('rvizconfig')],
-        condition=IfCondition(PythonExpression([view_only, "==True"]))
+        condition=IfCondition(PythonExpression([view_only, "==True", " or ", view_only, "==False"]))
     )
 
     rviz_node2 = Node(
@@ -66,14 +66,14 @@ def generate_launch_description():
         name='rviz2',
         output='screen',
         arguments=['-d', LaunchConfiguration('odomconfig')],
-        condition=IfCondition(PythonExpression([view_only, "==False"]))
+        condition=IfCondition(PythonExpression([view_only, "==None"]))
     )
 
     return LaunchDescription([
         view_only_arg,
         rviz_odom_arg,
         rviz_arg,
-        # joint_state_publisher_node,
+        joint_state_publisher_node,
         joint_state_publisher_gui_node,
         robot_state_publisher_node,
         rviz_node1,
