@@ -34,6 +34,7 @@ class Flip(Node):
         self.tmr = self.create_timer(self.period, self.timer_callback)
 
     def timer_callback(self):
+        """The velocity changes for flipping robot"""
         self.odom.header.stamp = self.get_clock().now().to_msg()
         if self.i==75:
             self.direction=self.direction*-1
