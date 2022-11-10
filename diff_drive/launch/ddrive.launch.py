@@ -17,6 +17,10 @@ def generate_launch_description():
     pkg_share = FindPackageShare(package='diff_drive').find('diff_drive')
     gz_model_path = os.path.join(pkg_share,'ddrive.urdf')
     os.environ["GAZEBO_MODEL_PATH"] = gz_model_path
+    view_only = LaunchConfiguration('view_only')
+    view_only_arg = DeclareLaunchArgument(name='view_only', default_value='None',
+                                        choices=['False', 'True','None'],
+                                        description='choose which jointstate publisher')
     config = os.path.join(
       get_package_share_directory('diff_drive'),
       'config',
@@ -48,7 +52,7 @@ def generate_launch_description():
                     '-topic', '/robot_description'],
                     output='screen')
 
-    bridge = Node(
+    bridge1 = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
@@ -56,10 +60,20 @@ def generate_launch_description():
           '/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry',
           '/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
           '/world/ddrive_world/model/robot/joint_state@sensor_msgs/msg/JointState@gz.msgs.Model'
-
         ],
         remappings=[('/world/ddrive_world/model/robot/joint_state', '/joint_states')],
-        output='screen'
+        output='screen',
+        condition=IfCondition(PythonExpression([view_only, "==False"]))
+    )
+
+    bridge2 = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=[
+          '/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist'
+        ],
+        output='screen',
+        condition=IfCondition(PythonExpression([view_only, "==None", " or ", view_only, "==True"]))
     )
 
     flip = Node(
@@ -70,9 +84,11 @@ def generate_launch_description():
         )
     
     return LaunchDescription([
+        view_only_arg,
         launch_gz,
         runlaunch,
-        bridge,
+        bridge1,
+        bridge2,
         spawn_robot_cmd,
         flip
     ])
