@@ -11,8 +11,15 @@ import math
 from std_msgs.msg import String
 
 class Flip(Node):
+    """
+    Flips car robot in Ignition Gazebo.
 
+    PUBLISHERS:
+    ----------
+    cmd_vel_pub (type: Twist): publishes changes in velocities 
+    """
     def __init__(self):
+        """Create initialize variables, publisher, start timer."""
         super().__init__('flip')
         self.cmd_vel_pub = self.create_publisher(Twist, '/cmd_vel', 10)
         self.vx = 11.0
