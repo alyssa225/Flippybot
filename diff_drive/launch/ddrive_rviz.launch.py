@@ -5,9 +5,9 @@ from launch.actions import DeclareLaunchArgument
 from launch.conditions import IfCondition
 from launch.substitutions import Command, LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
-from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 from launch.substitutions import PathJoinSubstitution, TextSubstitution
+
 
 def generate_launch_description():
     ddrive_path = FindPackageShare(package='diff_drive').find('diff_drive')
@@ -15,18 +15,14 @@ def generate_launch_description():
     default_rviz_odom_config_path = os.path.join(ddrive_path, 'config/ddrive_odom_urdf.rviz')
     view_only = LaunchConfiguration('view_only')
     view_only_arg = DeclareLaunchArgument(name='view_only', default_value='None',
-                                        choices=['False', 'True','None'],
-                                        description='choose which jointstate publisher')
-    use_gui = LaunchConfiguration('use_gui')
-    use_gui_arg = DeclareLaunchArgument(name='use_gui', default_value='True',
-                                        choices=['False', 'True'],
-                                        description='choose which jointstate publisher')
+                                          choices=['False', 'True', 'None'],
+                                          description='choose which jointstate publisher')
     rviz_arg = DeclareLaunchArgument(name='rvizconfig',
                                      default_value=str(default_rviz_config_path),
                                      description='Absolute path to rviz config file')
     rviz_odom_arg = DeclareLaunchArgument(name='odomconfig',
-                                     default_value=str(default_rviz_odom_config_path),
-                                     description='Absolute path to rviz odomconfig file')
+                                          default_value=str(default_rviz_odom_config_path),
+                                          description='Absolute path to rviz odomconfig file')
 
     config = os.path.join(
       get_package_share_directory('diff_drive'),
@@ -46,13 +42,12 @@ def generate_launch_description():
         package='joint_state_publisher',
         executable='joint_state_publisher',
         condition=IfCondition(PythonExpression([view_only, "==None"]))
-        
     )
 
     joint_state_publisher_gui_node = Node(
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
-        condition=IfCondition(PythonExpression([view_only, "==True"]))   
+        condition=IfCondition(PythonExpression([view_only, "==True"]))
     )
 
     rviz_node1 = Node(
@@ -76,7 +71,6 @@ def generate_launch_description():
     return LaunchDescription([
         view_only_arg,
         rviz_odom_arg,
-        use_gui_arg,
         rviz_arg,
         joint_state_publisher_node,
         joint_state_publisher_gui_node,

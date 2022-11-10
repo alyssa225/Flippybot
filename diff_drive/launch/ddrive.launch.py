@@ -1,32 +1,29 @@
 import os
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, ExecuteProcess
-from launch.conditions import IfCondition, UnlessCondition
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import Command, LaunchConfiguration, PythonExpression
+from launch.substitutions import LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
-from launch_ros.parameter_descriptions import ParameterValue
 from ament_index_python.packages import get_package_share_directory
-from launch_ros.substitutions import FindPackageShare
-from launch.substitutions import PathJoinSubstitution, TextSubstitution
+from launch.substitutions import PathJoinSubstitution
 
 
 def generate_launch_description():
 
     pkg_share = FindPackageShare(package='diff_drive').find('diff_drive')
-    gz_model_path = os.path.join(pkg_share,'ddrive.urdf')
+    gz_model_path = os.path.join(pkg_share, 'ddrive.urdf')
     os.environ["GAZEBO_MODEL_PATH"] = gz_model_path
     view_only = LaunchConfiguration('view_only')
     view_only_arg = DeclareLaunchArgument(name='view_only', default_value='None',
-                                        choices=['False', 'True','None'],
-                                        description='choose which jointstate publisher')
+                                          choices=['False', 'True', 'None'],
+                                          description='choose which jointstate publisher')
     config = os.path.join(
       get_package_share_directory('diff_drive'),
       'config',
-      'robot.yaml'
-      )
-    
+      'robot.yaml')
+
     runlaunch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             PathJoinSubstitution([
@@ -37,20 +34,21 @@ def generate_launch_description():
     )
 
     launch_gz = IncludeLaunchDescription(PythonLaunchDescriptionSource(
-                                        [FindPackageShare('ros_ign_gazebo'),
-                                        '/launch/ign_gazebo.launch.py']),
-                                        launch_arguments={'gz_args':[
-                                            FindPackageShare('diff_drive'),'/worlds/ddrive.world'],}.items())
-    
-    spawn_robot_cmd=Node(
+                                         [FindPackageShare('ros_ign_gazebo'),
+                                          '/launch/ign_gazebo.launch.py']),
+                                         launch_arguments={'gz_args':
+                                         [FindPackageShare('diff_drive'),
+                                          '/worlds/ddrive.world']}.items())
+
+    spawn_robot_cmd = Node(
         package='ros_gz_sim',
         executable='create',
-        arguments=['-name','robot',
-                    '-x', '-1.0',
-                    '-y', '4.0',
-                    '-z', '0.6',
-                    '-topic', '/robot_description'],
-                    output='screen')
+        arguments=['-name', 'robot',
+                   '-x', '-1.0',
+                   '-y', '4.0',
+                   '-z', '0.6',
+                   '-topic', '/robot_description'],
+        output='screen')
 
     bridge1 = Node(
         package='ros_gz_bridge',
@@ -82,7 +80,7 @@ def generate_launch_description():
             executable='flip',
             parameters=[config]
         )
-    
+
     return LaunchDescription([
         view_only_arg,
         launch_gz,
@@ -92,4 +90,3 @@ def generate_launch_description():
         spawn_robot_cmd,
         flip
     ])
-

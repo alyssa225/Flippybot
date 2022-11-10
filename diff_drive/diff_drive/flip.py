@@ -1,14 +1,8 @@
 import rclpy
 from rclpy.node import Node
-from tf2_ros.static_transform_broadcaster import StaticTransformBroadcaster
-from tf2_ros import TransformBroadcaster
-from rclpy.qos import QoSProfile
 from nav_msgs.msg import Odometry
-from geometry_msgs.msg import Twist,  TransformStamped, PoseStamped, Pose
-import math
+from geometry_msgs.msg import Twist
 
-
-from std_msgs.msg import String
 
 class Flip(Node):
     """
@@ -16,8 +10,10 @@ class Flip(Node):
 
     PUBLISHERS:
     ----------
-    cmd_vel_pub (type: Twist): publishes changes in velocities 
+    cmd_vel_pub (type: Twist): publishes changes in velocities
+
     """
+
     def __init__(self):
         """Create initialize variables, publisher, start timer."""
         super().__init__('flip')
@@ -34,20 +30,19 @@ class Flip(Node):
         self.tmr = self.create_timer(self.period, self.timer_callback)
 
     def timer_callback(self):
-        """The velocity changes for flipping robot"""
+        """Change in velocity for flipping robot."""
         self.odom.header.stamp = self.get_clock().now().to_msg()
-        if self.i==75:
-            self.direction=self.direction*-1
+        if self.i == 75:
+            self.direction = self.direction * -1
             self.lastdir = self.direction
-        elif self.i==160:
-            self.direction=0
-        elif self.i==270:
+        elif self.i == 160:
+            self.direction = 0
+        elif self.i == 270:
             self.direction = self.lastdir
             self.i = 0
         self.odom.twist.twist.linear.x = self.direction*self.vx
-        self.cmd_vel_pub.publish(self.odom.twist.twist)        
-        self.i = self.i+1
-        
+        self.cmd_vel_pub.publish(self.odom.twist.twist)
+        self.i = self.i + 1
 
 
 def main(args=None):
