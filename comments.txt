@@ -1,0 +1,12 @@
+Overall, you did this assignment well and its clear to me that you put a lot of work in and have come a long way from HW 1!
+
+Style comments:
+extra files (.urdf and .sdf) are left in base directory) 
+__pycache__ is in the test directory but should not be in git 
+
+GAZEBO_MODEL_PATH is for gazebo classic and should not be in launch file
+There are simpler ways of comparing things in launchfiles than PythonExpression, (such as LaunchConfigurationEquals) but that works!
+PythonLaunchDescription is not necessary, IncludeLaunchDescription works with python launch files
+
+2. Package does not properly setup gazebo asset paths 
+    https://nu-msr.github.io/ros_notes/ros2/simulation.html#orgec094d8
